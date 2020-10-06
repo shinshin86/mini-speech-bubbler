@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Mini Speech Bubbler</title>
+</head>
+
+<body>
+    <style>
+        /**
+         * Reference: https://saruwakakun.com/html-css/reference/speech-bubble
+         */
+        .balloon {
+            margin: 1.5em 0;
+            display: flex;
+            align-items: center;
+        }
+
+        .balloon .faceicon {
+            float: left;
+            margin-right: -90px;
+            width: 150px;
+        }
+
+        .balloon .faceicon img {
+            width: 100%;
+            height: auto;
+            border: solid 3px #d7ebfe;
+            border-radius: 50%;
+        }
+
+        .balloon .chatting {
+            width: 100%;
+        }
+
+        .says {
+            display: inline-block;
+            position: relative;
+            margin: 50px 20px 40px 115px;
+            padding: 17px 13px;
+            border-radius: 12px;
+            background: #d7ebfe;
+            min-width: 600px;
+            height: 75px;
+        }
+
+        .says:after {
+            content: "";
+            display: inline-block;
+            position: absolute;
+            top: 18px;
+            left: -24px;
+            border: 12px solid transparent;
+            border-right: 12px solid #d7ebfe;
+        }
+
+        .says p {
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+    <div>
+        <div class="balloon">
+            <div class="faceicon">
+                <img src={{.}} alt="avatar image" />
+            </div>
+            <div class="chatting">
+                <div class="says">
+                    <p id="output"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        const output = document.getElementById('output');
+        const recognition = new webkitSpeechRecognition();
+
+        // setting recognition
+        recognition.interimResults = true;
+        recognition.continuous = true;
+
+        /**
+         * parse query string parameter
+         * lang: Recognition language -> ex: lang=es,lang=ja...
+         * realtime: Realtime display -> ex: realtime=true or realtime=false(default: false)
+         */
+        const queryString = window.location.search;
+        const { lang, realtime } = [...new URLSearchParams(queryString).entries()].reduce((obj, e) => ({ ...obj, [e[0]]: e[1] }), {});;
+        if (lang) recognition.lang = lang;
+
+        recognition.onresult = function ({ results }) {
+            for (let i = 0; i < results.length; i++) {
+                if (results[i].isFinal || realtime) {
+                    const text = results[i][0].transcript
+                    output.innerHTML = '<p style="font-size: 50px">' + text + '</p>';
+                }
+            }
+        }
+
+        recognition.onend = () => recognition.start();
+
+        recognition.onerror = () => output.innerHTML = '<p style="font-size: 50px">Error</p>';
+
+        window.addEventListener('load', () => recognition.start());
+    </script>
+</body>
+
+</html>
