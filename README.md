@@ -1,18 +1,25 @@
 # mini-speech-bubbler
 
+![Demo gif](./gif/demo.gif)
+
 
 
 ## Usage
 
-Store the avatar image in the static directory with the name avatar.png before running.
-Currently only the png format is supported.
+Store the avatar image in the `static` directory with the name `avatar.png` before running.
+
+**Note:**
+Currently only the `png` format is supported.
 (I will soon be supporting `jpeg` format as well.)
 
 Execute this command to access the `http://localhost:3000`.
 
 ```bash
-go run main.go
+go get github.com/shinshin86/mini-speech-bubbler
+mini-speech-bubbler
 ```
+
+If you want to use a single binary, please download from [this Release page](https://github.com/shinshin86/mini-speech-bubbler/releases).
 
 
 
