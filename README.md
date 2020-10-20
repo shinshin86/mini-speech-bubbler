@@ -9,8 +9,8 @@
 Store the avatar image in the `static` directory with the name `avatar.png` before running.
 
 **Note:**
-Currently only the `png` format is supported.
-(I will soon be supporting `jpeg` format as well.)
+Currently only the `png,jpeg(jpg)` format is supported.
+
 
 Execute this command to access the `http://localhost:3000`.
 
