@@ -90,11 +90,10 @@
         if (lang) recognition.lang = lang;
 
         recognition.onresult = function ({ results }) {
-            for (let i = 0; i < results.length; i++) {
-                if (results[i].isFinal || realtime) {
-                    const text = results[i][0].transcript
-                    output.innerHTML = '<p style="font-size: 50px">' + text + '</p>';
-                }
+            const latestItemIndex = results.length - 1;
+            if (results[latestItemIndex].isFinal || realtime) {
+                const text = results[latestItemIndex][0].transcript
+                output.innerHTML = '<p style="font-size: 50px">' + text + '</p>';
             }
         }
 
